@@ -1,10 +1,14 @@
+import logging
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
+from src.apps.countries.misc import populate_countries
+from src.utils.database import fetch_apps_models
 from src.apps.router import router
 from src.conf.settings import settings
-from src.utils.database import fetch_apps_models
+
+logging.basicConfig(level=logging.DEBUG if settings.DEBUG else logging.WARN)
 
 app = FastAPI(
     title=settings.APP_TITLE,
@@ -32,4 +36,7 @@ register_tortoise(
 )
 
 
-
+@app.on_event('startup')
+async def on_startup():
+    created_c = await populate_countries()
+    print('created countries', created_c)
