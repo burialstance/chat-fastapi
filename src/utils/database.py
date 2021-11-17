@@ -27,7 +27,7 @@ def fetch_apps_models(folder='apps', installed_apps: List[str] = None) -> List:
 
         if app_models_folder.exists():
             app_models = ([
-                i.name.rstrip(i.suffix) for i in app_models_folder.iterdir()
+                i.name.removesuffix(i.suffix) for i in app_models_folder.iterdir()
                 if all([i.is_file(), not i.name.startswith('__')])
             ])
             for model in app_models:
