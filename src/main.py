@@ -7,7 +7,7 @@ from src.apps.countries.misc import populate_countries
 from src.utils.database import fetch_apps_models
 from src.apps.router import router
 from src.conf.settings import settings
-
+from src.exceptions.validate_request import ValidationErrorLoggingRoute
 logging.basicConfig(level=logging.DEBUG if settings.DEBUG else logging.WARN)
 
 app = FastAPI(
@@ -16,6 +16,7 @@ app = FastAPI(
     version=settings.APP_VERSION,
     debug=settings.DEBUG
 )
+app.router.route_class = ValidationErrorLoggingRoute
 
 app.add_middleware(
     CORSMiddleware,
