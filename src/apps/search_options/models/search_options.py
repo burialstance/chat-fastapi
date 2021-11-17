@@ -11,9 +11,9 @@ class SearchOptions(models.Model):
         'models.User', related_name='search_options', on_delete=fields.CASCADE, pk=True, index=True
     )
 
-    from_age: Optional[int]
-    to_age: Optional[int]
-    gender: Optional[GendersEnum]
+    from_age: Optional[int] = fields.IntField(null=True)
+    to_age: Optional[int] = fields.IntField(null=True)
+    gender: Optional[GendersEnum] = fields.CharEnumField(GendersEnum, null=True)
     country: fields.ForeignKeyNullableRelation['Country'] = fields.ForeignKeyField(
         'models.Country', related_name='search_options', on_delete=fields.SET_NULL, null=True
     )
