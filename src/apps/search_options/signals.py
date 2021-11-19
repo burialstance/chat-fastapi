@@ -12,4 +12,4 @@ async def signal_create_default_search_options(
         using_db: "Optional[BaseDBAsyncClient]", update_fields: List[str]) -> None:
 
     if created:
-        await SearchOptions.create(user_id=instance.id)
+        await SearchOptions.create(user=instance)

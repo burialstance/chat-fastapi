@@ -21,4 +21,5 @@ class SearchOptions(models.Model):
     class PydanticMeta:
         exclude = ('id',)
 
+
 Tortoise.init_models(fetch_apps_models(), 'models')

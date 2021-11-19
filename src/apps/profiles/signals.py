@@ -12,4 +12,4 @@ async def signal_create_default_profile(
         using_db: "Optional[BaseDBAsyncClient]", update_fields: List[str]) -> None:
 
     if created:
-        await Profile.create(user_id=instance.id)
+        await Profile.create(user=instance)
