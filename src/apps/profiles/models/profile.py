@@ -7,7 +7,7 @@ from src.conf.enums import GendersEnum
 
 class Profile(models.Model):
     user: fields.OneToOneRelation['User'] = fields.OneToOneField(
-        'models.User', related_name='profile', on_delete=fields.CASCADE, pk=True, index=True
+        'models.User', related_name='profile', on_delete=fields.CASCADE
     )
 
     age: Optional[int] = fields.SmallIntField(null=True)
@@ -16,5 +16,7 @@ class Profile(models.Model):
         'models.Country', related_name='profiles', on_delete=fields.SET_NULL, null=True
     )
 
+    class PydanticMeta:
+        exclude = ('id',)
 
 Tortoise.init_models(fetch_apps_models(), 'models')
