@@ -2,16 +2,21 @@ from typing import List
 from fastapi import APIRouter
 
 from .. import schemas
-from ..models.country import Country
+from ..services import country_service
 
 router = APIRouter()
 
 
-@router.get('/', response_model=List[schemas.CountryPublic])
+@router.post('/create', response_model=schemas.CountryPublic)
+async def create_country(form: schemas.CountryCreate):
+    return await country_service.create_country(form)
+
+
+@router.get('/all', response_model=List[schemas.CountryPublic])
 async def get_all_countries():
-    return await Country.all()
+    return await country_service.get_all_countries()
 
 
-@router.get('/{id}', response_model=schemas.CountryPublic)
+@router.get('', response_model=schemas.CountryPublic)
 async def get_country(id: int):
-    return await Country.get(id=id)
+    return await country_service.get_country(id=id)
