@@ -20,4 +20,7 @@ async def populate_countries():
         if not await Country.exists(name=name):
             country = await Country.create(name=name, icon=icon)
             created.append(country)
+
+    if created:
+        print('created countries', [i.name for i in created])
     return created

@@ -39,5 +39,4 @@ register_tortoise(
 
 @app.on_event('startup')
 async def on_startup():
-    created_c = await populate_countries()
-    print('created countries', created_c)
+    await populate_countries()
