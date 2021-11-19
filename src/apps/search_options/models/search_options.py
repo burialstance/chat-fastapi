@@ -7,8 +7,8 @@ from src.utils.database import fetch_apps_models
 
 
 class SearchOptions(models.Model):
-    user: fields.OneToOneRelation['User'] = fields.ForeignKeyField(
-        'models.User', related_name='search_options', on_delete=fields.CASCADE, pk=True, index=True
+    user: fields.OneToOneRelation['User'] = fields.OneToOneField(
+        'models.User', related_name='search_options', on_delete=fields.CASCADE
     )
 
     from_age: Optional[int] = fields.IntField(null=True)
@@ -18,5 +18,7 @@ class SearchOptions(models.Model):
         'models.Country', related_name='search_options', on_delete=fields.SET_NULL, null=True
     )
 
+    class PydanticMeta:
+        exclude = ('id',)
 
 Tortoise.init_models(fetch_apps_models(), 'models')
