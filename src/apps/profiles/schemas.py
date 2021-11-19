@@ -2,12 +2,12 @@ from typing import Optional
 from pydantic import BaseModel
 
 from src.conf.enums import GendersEnum
-
+from ..countries.schemas import CountryPublic
 
 class ProfileBase(BaseModel):
     age: Optional[int]
     gender: Optional[GendersEnum]
-    country_id: Optional[int]
+    country: Optional[CountryPublic]
 
 
 class ProfileCreate(ProfileBase):
@@ -15,7 +15,7 @@ class ProfileCreate(ProfileBase):
 
 
 class ProfilePublic(ProfileBase):
-    user_id: int
+    ...
 
 
 class ProfileUpdate(ProfileBase):
