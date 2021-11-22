@@ -8,7 +8,7 @@ from src.utils.database import fetch_apps_models
 
 class SearchOptions(models.Model):
     user: fields.OneToOneRelation['User'] = fields.OneToOneField(
-        'models.User', related_name='search_options', on_delete=fields.CASCADE
+        'models.User', related_name='search_options', on_delete=fields.CASCADE, pk=True, index=True
     )
 
     from_age: Optional[int] = fields.IntField(null=True)
