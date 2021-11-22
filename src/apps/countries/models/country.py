@@ -1,10 +1,11 @@
 from typing import Optional
 
 from tortoise import fields, models
+from ..enums import CountriesEnum
 
 
 class Country(models.Model):
-    name: str = fields.CharField(max_length=64, unique=True)
+    name: CountriesEnum = fields.CharEnumField(CountriesEnum, unique=True)
     icon: Optional[str] = fields.CharField(max_length=8, null=True)
 
     class PydanticMeta:

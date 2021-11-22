@@ -10,7 +10,3 @@ class CountryBase(BaseModel):
 
 class CountryPublic(CountryBase):
     id: int
-
-
-class CountryCreate(CountryBase):
-    ...

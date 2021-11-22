@@ -1,25 +1,30 @@
 from src.apps.countries.models.country import Country
+from .enums import CountriesEnum
 
-available_countries = {
-    'Россия': '🇷🇺',
-    'Украина': '🇺🇦',
-    'Беларусь': '🇧🇾',
-    'Казахстан': '🇰🇿',
-    'Узбекистан': '🇺🇿',
-    'Таджикистан': '🇹🇯',
-    'Туркменистан': '🇹🇲',
-    'Азербайджан': '🇦🇿',
-    'Армения': '🇦🇲',
-    'Молдова': '🇲🇩'
+
+country_icons = {
+    CountriesEnum.RUSSIA: '🇷🇺',
+    CountriesEnum.UKRAINE: '🇺🇦',
+    CountriesEnum.BELARUS: '🇧🇾',
+    CountriesEnum.KAZAKHSTAN: '🇰🇿',
+    CountriesEnum.UZBEKISTAN: '🇺🇿',
+    CountriesEnum.TAJIKISTAN: '🇹🇯',
+    CountriesEnum.TURKMENISTAN: '🇹🇲',
+    CountriesEnum.AZERBAIJAN: '🇦🇿',
+    CountriesEnum.ARMENIA: '🇦🇲',
+    CountriesEnum.MOLDOVA: '🇲🇩'
 }
 
 
 async def populate_countries():
     created = []
-    for name, icon in available_countries.items():
-        if not await Country.exists(name=name):
-            country = await Country.create(name=name, icon=icon)
-            created.append(country)
+    for country in list(CountriesEnum):
+        if not await Country.exists(name=country.value):
+            country_icon = country_icons.get(country, None)
+            new_country = await Country.create(
+                name=country.value, icon=country_icon
+            )
+            created.append(new_country)
 
     if created:
         print('created countries', [i.name for i in created])
