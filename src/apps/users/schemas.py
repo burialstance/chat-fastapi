@@ -1,11 +1,10 @@
-from typing import Optional
+from typing import Optional, List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, UUID4
 
+from src.apps.messengers.schemas import MessengerBase
 from src.apps.users.models.user import User
 from src.apps.profiles.schemas import ProfilePublic, ProfileBase
-from src.apps.search_options.schemas import SearchOptionsPublic
-from src.conf.enums import GendersEnum, CountriesEnum
 
 from tortoise.contrib.pydantic import pydantic_model_creator
 
@@ -22,9 +21,10 @@ class UserCreate(UserBase):
 
 
 class UserPublic(UserBase):
-    id: int
+    id: UUID4
 
 
 class SignUpForm(BaseModel):
     user: UserCreate
     profile: Optional[ProfileBase]
+    messenger: Optional[MessengerBase]

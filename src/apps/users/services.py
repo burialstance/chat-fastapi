@@ -1,43 +1,20 @@
 from typing import Optional, List
 
+from fastapi import HTTPException
+from pydantic import UUID4
+
 from src.contrib.services.base_service import BaseService
 from src.apps.profiles.services import profile_service
 
 from .models.user import User
 from . import schemas
-
-"""
-from src.apps.users.models.user import User
-from src.apps.profiles.models.profile import Profile
-from src.apps.countries.models.country import Country
-from src.apps.search_options.models.search_options import SearchOptions
-
-from .. import schemas
-
-
-async def signup_user(form: schemas.SignUpForm) -> schemas.UserPublic:
-    user = await User.create(
-        first_name=form.first_name,
-        last_name=form.last_name
-    )
-
-    country = await Country.get(name=form.country.value)
-    profile = await Profile.create(
-        user=user,
-        age=form.age,
-        gender=form.gender,
-        country=country
-    )
-    search_options = await SearchOptions.create(user=user)
-
-    return schemas.UserPublic.from_orm(user)
-"""
+from ..messengers.services import messenger_service
 
 
 class UserService(BaseService[User]):
 
-    async def get_user(self, id: int) -> User:
-        return await self._get(id=id)
+    async def get_user(self, uuid: UUID4) -> User:
+        return await self._get(id=uuid)
 
     async def create_user(self, form: schemas.UserCreate):
         return await self._create(**form.dict(exclude_unset=True))
@@ -51,7 +28,12 @@ class UserService(BaseService[User]):
         if form.profile:
             await profile_service.update_profile(user_id=user.id, form=form.profile)
 
+        if form.messenger:
+            await messenger_service.create_messenger(user_id=user.id, form=form.messenger)
+
         return user
+
+
 
 
 user_service = UserService(User)
