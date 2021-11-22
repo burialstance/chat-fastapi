@@ -18,8 +18,5 @@ class SearchOptions(models.Model):
         'models.Country', related_name='search_options', on_delete=fields.SET_NULL, null=True
     )
 
-    class PydanticMeta:
-        exclude = ('id',)
-
 
 Tortoise.init_models(fetch_apps_models(), 'models')

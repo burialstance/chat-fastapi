@@ -16,8 +16,5 @@ class Profile(models.Model):
         'models.Country', related_name='profiles', on_delete=fields.SET_NULL, null=True
     )
 
-    class PydanticMeta:
-        exclude = ('id',)
-
 
 Tortoise.init_models(fetch_apps_models(), 'models')
