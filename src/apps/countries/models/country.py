@@ -1,7 +1,7 @@
 from typing import Optional
 
 from tortoise import fields, models
-from ..enums import CountriesEnum
+from src.conf.enums import CountriesEnum
 
 
 class Country(models.Model):

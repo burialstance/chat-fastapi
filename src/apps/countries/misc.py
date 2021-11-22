@@ -1,5 +1,5 @@
 from src.apps.countries.models.country import Country
-from .enums import CountriesEnum
+from src.conf.enums import CountriesEnum
 
 
 country_icons = {
