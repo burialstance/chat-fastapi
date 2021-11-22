@@ -7,7 +7,7 @@ from src.conf.enums import GendersEnum
 
 class Profile(models.Model):
     user: fields.OneToOneRelation['User'] = fields.OneToOneField(
-        'models.User', related_name='profile', on_delete=fields.CASCADE
+        'models.User', related_name='profile', on_delete=fields.CASCADE, pk=True, index=True
     )
 
     age: Optional[int] = fields.SmallIntField(null=True)
